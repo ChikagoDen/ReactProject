@@ -3,67 +3,99 @@ import React, { useState } from 'react';
 
 const library = [
     {
-        id: 1,
         text: 'Тише и ыфсьдл луать ',
         author: 'Толстой',
     },
     {
-        id: 2,
         text: 'А',
         author: 'Пушкин',
 
     },
     {
-        id: 3,
         text: 'Кот',
         author: 'Лермонтов',
-
     }
 ];
 
 export function MessagesList() {
-    let [objArr, setObjArr] = useState(library);
-    let [text,setText]=useState('');
-    let [author,setAuthor]=useState('');
-    console.log(objArr[0].text);
-    const result = objArr.map((obj) => {
+        let [form, setForm] = useState({
+        text: '',
+        author: ''
+    });
+    console.log(form);
+    const result = library.map((obj) => {
         return (
-            <p key={obj.id}>
-                {obj.id} {Object.keys(obj)[1]}: {obj.text}<br/>
-                {Object.keys(obj)[2]}: {obj.author}
+            <p>
+                {Object.keys(obj)[0]}: {obj.text}<br/>
+                {Object.keys(obj)[1]}: {obj.author}
             </p>);
     });
 
-    return(
-    <div>
-        <p>Вывод массива объектов</p>
-        {result}
-        <p> Как запихнуть в массив объектов не могу догнать</p>
-        текст<input value={text} onChange={(event)=>setText(event.target.value)}/>
-        <p>{text}</p>
-        автор<input value={author} onChange={(event)=>setAuthor(event.target.value)}/>
-        <p>{author}</p>
-        <button onClick={()=>setText(text)}>Отправить</button>
-        как в кнопку запихнуть автора?
-    </div>);
-
-
-// Добавление в массив
-    const add = {
-        id: 4,
-        text: 'Кот бегемот пошел гулять',
-        author: 'Зощенко',
+    console.log(library);
+        const submit = e => {
+        e.preventDefault();
+        console.log(form.text, form.author);
+            library.push(form);
+            setForm({
+                ...form,
+                [e.target.name]: e.target.value
+            });
     };
-    let copy = Object.assign([], objArr);
-    copy.push(add);
-    setObjArr(copy);
+        const update = e => {
+             setForm({
+            ...form,
+            [e.target.name]: e.target.value
+        });
+    };
 
-    // удаление
-    setObjArr(objArr.filter(obj => {
-        if (obj.id != '38GlFQnHM10UuRDNVUdiebjTq') {
-            return obj;
-        }
-    }));
+
+    return (
+       <div>
+           {result}
+           <form onSubmit={submit}>
+               <label>
+                   Имя:
+                   <input
+                       value={form.text}
+                       name="text"
+                       onChange={update}
+                   />
+               </label>
+
+               <label>
+                   Пароль:
+                   <input
+                       value={form.author}
+                       name="author"
+                       type="text"
+                       onChange={update}
+                   />
+               </label>
+
+               <button>Отправить</button>
+           </form>
+       </div>
+
+    );
+
+
+
+// // Добавление в массив
+//     const add = {
+//         id: 4,
+//         text: 'Кот бегемот пошел гулять',
+//         author: 'Зощенко',
+//     };
+//     let copy = Object.assign([], objArr);
+//     copy.push(add);
+//     setObjArr(copy);
+//
+//     // удаление
+//     setObjArr(objArr.filter(obj => {
+//         if (obj.id != '38GlFQnHM10UuRDNVUdiebjTq') {
+//             return obj;
+//         }
+//     }));
 
 
 
