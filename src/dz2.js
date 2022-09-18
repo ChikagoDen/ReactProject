@@ -1,5 +1,5 @@
 import './App.css';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 const library = [
     {
@@ -26,8 +26,8 @@ export function MessagesList() {
     const result = library.map((obj) => {
         return (
             <p>
-                {Object.keys(obj)[0]}: {obj.text}<br/>
-                {Object.keys(obj)[1]}: {obj.author}
+                Текст: {obj.text}<br/>
+                Автор: {obj.author}
             </p>);
     });
 
@@ -54,16 +54,16 @@ export function MessagesList() {
            {result}
            <form onSubmit={submit}>
                <label>
-                   Имя:
+                   Текст:
                    <input
                        value={form.text}
                        name="text"
                        onChange={update}
                    />
                </label>
-
+<br/><br/>
                <label>
-                   Пароль:
+                   Автор:
                    <input
                        value={form.author}
                        name="author"
@@ -71,7 +71,7 @@ export function MessagesList() {
                        onChange={update}
                    />
                </label>
-
+<br/><br/>
                <button>Отправить</button>
            </form>
        </div>
