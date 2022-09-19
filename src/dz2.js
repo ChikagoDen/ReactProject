@@ -18,14 +18,11 @@ let library = [
 ];
 
 export function MessagesList() {
-        let [form, setForm] = useState({
+    let [form, setForm] = useState({
         text: '',
         author: ''
     });
 
-    function handleAlertClick() {
-        setTimeout(() => {alert('Вы отправили сообщение!!!');}, 1500);
-    }
     const result = library.map((obj) => {
         return (
             <p>
@@ -42,7 +39,13 @@ export function MessagesList() {
         setForm({...form,[e.target.name]: e.target.value});
     };
 
+
+    function handleAlertClick() {
+        setTimeout(() => {alert('Вы отправили сообщение!!!');}, 1500);
+    }
+
 useEffect(()=>handleAlertClick(),[library.length]);
+
     return (
        <div>
            {result}
