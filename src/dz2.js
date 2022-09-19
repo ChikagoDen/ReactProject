@@ -1,7 +1,7 @@
 import './App.css';
 import React, { useState, useEffect } from 'react';
 
-const library = [
+let library = [
     {
         text: 'Тише и ыфсьдл луать ',
         author: 'Толстой',
@@ -22,7 +22,10 @@ export function MessagesList() {
         text: '',
         author: ''
     });
-    console.log(form);
+
+    function handleAlertClick() {
+        setTimeout(() => {alert('Вы отправили сообщение!!!');}, 1500);
+    }
     const result = library.map((obj) => {
         return (
             <p>
@@ -30,29 +33,20 @@ export function MessagesList() {
                 Автор: {obj.author}
             </p>);
     });
-
-    console.log(library);
-        const submit = e => {
+    const submit = e => {
         e.preventDefault();
-        console.log(form.text, form.author);
-            library.push(form);
-            setForm({
-                ...form,
-                [e.target.name]: e.target.value
-            });
+        library.push(form);
+        setForm({...form,[e.target.name]: e.target.value });
     };
-        const update = e => {
-             setForm({
-            ...form,
-            [e.target.name]: e.target.value
-        });
+    const update = e => {
+        setForm({...form,[e.target.name]: e.target.value});
     };
 
-
+useEffect(()=>handleAlertClick(),[library.length]);
     return (
        <div>
            {result}
-           <form onSubmit={submit}>
+           <form>
                <label>
                    Текст:
                    <input
@@ -72,33 +66,10 @@ export function MessagesList() {
                    />
                </label>
 <br/><br/>
-               <button>Отправить</button>
+               <button onClick={submit}>Отправить</button>
            </form>
        </div>
-
     );
-
-
-
-// // Добавление в массив
-//     const add = {
-//         id: 4,
-//         text: 'Кот бегемот пошел гулять',
-//         author: 'Зощенко',
-//     };
-//     let copy = Object.assign([], objArr);
-//     copy.push(add);
-//     setObjArr(copy);
-//
-//     // удаление
-//     setObjArr(objArr.filter(obj => {
-//         if (obj.id != '38GlFQnHM10UuRDNVUdiebjTq') {
-//             return obj;
-//         }
-//     }));
-
-
-
 }
 
 export default MessagesList;
