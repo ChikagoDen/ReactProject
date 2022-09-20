@@ -1,78 +1,82 @@
 import './App.css';
 import React, { useState, useEffect } from 'react';
 
-let library = [
-    {
-        text: 'Тише и ыфсьдл луать ',
-        author: 'Толстой',
-    },
-    {
-        text: 'А',
-        author: 'Пушкин',
-
-    },
-    {
-        text: 'Кот',
-        author: 'Лермонтов',
-    }
-];
 
 export function MessagesList() {
+    const [messagesList, setMessagesList] = useState([]);
     let [form, setForm] = useState({
         text: '',
-        author: ''
+        author: '',
+        id:'',
     });
-
-    const result = library.map((obj) => {
-        return (
-            <p>
-                Текст: {obj.text}<br/>
-                Автор: {obj.author}
-            </p>);
-    });
-    const submit = e => {
+    const handleSubmit = e => {
         e.preventDefault();
-        library.push(form);
-        setForm({...form,[e.target.name]: e.target.value });
+        setMessagesList(prevState => [...prevState,{
+            id:messagesList.length,
+            text:form.text,
+            author:form.author,
+        }]);
     };
-    const update = e => {
+    const handleUpdateInput = e => {
         setForm({...form,[e.target.name]: e.target.value});
     };
 
 
-    function handleAlertClick() {
-        setTimeout(() => {alert('Вы отправили сообщение!!!');}, 1500);
-    }
+    return(
+        <div>
+            <form onSubmit={handleSubmit}>
+                <label>
+                    Текст:
+                    <input value={form.text} name="text" onChange={handleUpdateInput}/>
+                </label>
+                <br/>
+                <label>
+                    Автор:
+                    <input value={form.author} name="author" type="text" onChange={handleUpdateInput}/>
+                </label>
+                <br/>
+                <button >Отправить</button>
+            </form>
+            {messagesList.map(message =>{
+                return(
+                    <div>
+                        <p>{message.text}</p>
+                        <p>Автор:{message.author}</p>
+                    </div>
+                )
+            })}
+        </div>
+    )
 
-useEffect(()=>handleAlertClick(),[library.length]);
 
-    return (
-       <div>
-           {result}
-           <form>
-               <label>
-                   Текст:
-                   <input
-                       value={form.text}
-                       name="text"
-                       onChange={update}
-                   />
-               </label>
-<br/><br/>
-               <label>
-                   Автор:
-                   <input
-                       value={form.author}
-                       name="author"
-                       type="text"
-                       onChange={update}
-                   />
-               </label>
-<br/><br/>
-               <button onClick={submit}>Отправить</button>
-           </form>
-       </div>
-    );
+
+//     return (
+//        <div>
+//            {result}
+//            <form>
+//                <label>
+//                    Текст:
+//                    <input
+//                        value={form.text}
+//                        name="text"
+//                        onChange={update}
+//                    />
+//                </label>
+// <br/><br/>
+//                <label>
+//                    Автор:
+//                    <input
+//                        value={form.author}
+//                        name="author"
+//                        type="text"
+//                        onChange={update}
+//                    />
+//                </label>
+// <br/><br/>
+//                <button onClick={submit}>Отправить</button>
+//            </form>
+//        </div>
+//     );
 }
 
 export default MessagesList;
