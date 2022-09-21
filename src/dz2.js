@@ -16,6 +16,10 @@ export function MessagesList() {
             text:form.text,
             author:form.author,
         }]);
+        setForm({
+            text:'',
+            author:'',
+        });
     };
     const handleUpdateInput = e => {
         setForm({...form,[e.target.name]: e.target.value});
@@ -39,7 +43,7 @@ export function MessagesList() {
             </form>
             {messagesList.map(message =>{
                 return(
-                    <div>
+                    <div key={message.id}>
                         <p>{message.text}</p>
                         <p>Автор:{message.author}</p>
                     </div>
